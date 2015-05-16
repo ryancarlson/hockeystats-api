@@ -26,6 +26,8 @@ public class Player
 
 	String number;
 
+	String position;
+
 	@ManyToOne(fetch= FetchType.LAZY)
 	@JoinColumn(name="team_id")
 	Team team;
@@ -58,5 +60,25 @@ public class Player
 	public void setNumber(String number)
 	{
 		this.number = number;
+	}
+
+	public String getPosition()
+	{
+		return position;
+	}
+
+	public void setPosition(String position)
+	{
+		this.position = position;
+	}
+
+	public Team getTeam()
+	{
+		return team;
+	}
+
+	public void setTeam(Team team)
+	{
+		this.team = team;
 	}
 }
