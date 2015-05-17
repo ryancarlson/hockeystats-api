@@ -88,4 +88,22 @@ public class TeamResource
 				.build();
 	}
 
+	@GET
+	@Path("/{teamId}/players")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getPlayersForTeam(@PathParam("teamId") UUID teamId)
+	{
+		Team team = entityManager.find(Team.class, teamId);
+
+		if(team == null)
+		{
+			return Response
+					.status(Response.Status.NOT_FOUND)
+					.build();
+		}
+
+		return Response
+				.ok(team.getPlayers())
+				.build();
+	}
 }
