@@ -1,6 +1,7 @@
 package org.carlson.hockeystats.domain;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.google.common.collect.Sets;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.Entity;
@@ -27,7 +28,7 @@ public class Team
 
 	@OneToMany(mappedBy="team", fetch = FetchType.LAZY)
 	@JsonManagedReference
-	Set<Player> players;
+	Set<Player> players = Sets.newHashSet();
 
 	public UUID getId()
 	{
