@@ -1,5 +1,6 @@
 package org.carlson.hockeystats.domain;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.hibernate.annotations.Type;
 import org.joda.time.DateTime;
 
@@ -40,7 +41,7 @@ public class Game
 
 	boolean awayTeamShootoutWin;
 
-	@Transient
+	@Type(type="org.jadira.usertype.dateandtime.joda.PersistentDateTime")
 	DateTime gameTimestamp;
 
 
