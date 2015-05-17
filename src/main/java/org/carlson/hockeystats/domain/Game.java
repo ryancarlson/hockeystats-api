@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import java.util.UUID;
 
 /**
@@ -20,7 +21,7 @@ public class Game
 {
 
 	@Id
-	@Type(type="pg_uuid")
+	@Type(type="pg-uuid")
 	UUID id;
 
 	@ManyToOne(fetch= FetchType.LAZY)
@@ -39,6 +40,7 @@ public class Game
 
 	boolean awayTeamShootoutWin;
 
+	@Transient
 	DateTime gameTimestamp;
 
 

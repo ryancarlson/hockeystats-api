@@ -1,5 +1,6 @@
 package org.carlson.hockeystats.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.Entity;
@@ -19,7 +20,7 @@ public class Player
 {
 
 	@Id
-	@Type(type="pg_uuid")
+	@Type(type="pg-uuid")
 	UUID id;
 
 	String name;
@@ -30,6 +31,7 @@ public class Player
 
 	@ManyToOne(fetch= FetchType.LAZY)
 	@JoinColumn(name="team_id")
+	@JsonBackReference
 	Team team;
 
 	public UUID getId()
