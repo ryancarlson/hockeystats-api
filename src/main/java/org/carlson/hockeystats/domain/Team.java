@@ -25,7 +25,7 @@ public class Team
 
 	String league;
 
-	@OneToMany(mappedBy="team", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy="team", fetch = FetchType.LAZY)
 	@JsonManagedReference
 	Set<Player> players;
 
