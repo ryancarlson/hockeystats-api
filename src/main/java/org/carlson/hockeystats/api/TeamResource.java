@@ -57,8 +57,6 @@ public class TeamResource
 		return QuickResponse.created(String.format("/teams/%s", team.getId()));
 	}
 
-
-
 	@PUT
 	@Path("/{teamId}")
 	@Consumes(MediaType.APPLICATION_JSON)
