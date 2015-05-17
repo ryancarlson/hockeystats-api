@@ -1,6 +1,7 @@
 package org.carlson.hockeystats.api;
 
 import org.carlson.hockeystats.api.utils.QuickResponse;
+import org.carlson.hockeystats.domain.Player;
 import org.carlson.hockeystats.domain.Team;
 
 import javax.persistence.EntityManager;
@@ -92,5 +93,26 @@ public class TeamResource
 		}
 
 		return QuickResponse.ok(team.getPlayers());
+	}
+
+	@POST
+	@Path("/{teamId}/players")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response addPlayerToTeam(@PathParam("teamId") UUID teamId, Player player)
+	{
+		Team team = entityManager.find(Team.class, teamId);
+
+		if(team == null)
+		{
+			return QuickResponse
+					.badRequest(String.format("Team with ID %s does not exist", teamId));
+		}
+
+		if(player.getId() == null) player.setId(UUID.randomUUID());
+		player.setTeam(team);
+
+		team.getPlayers().add(player);
+
+		return QuickResponse.created(String.format("/teams/%s/players/%s", teamId, player.getId()));
 	}
 }
