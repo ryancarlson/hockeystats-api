@@ -24,11 +24,11 @@ public class Game
 	@Type(type="pg-uuid")
 	UUID id;
 
-	@ManyToOne(fetch= FetchType.LAZY)
+	@ManyToOne(fetch= FetchType.EAGER)
 	@JoinColumn(name="home_team_id")
 	Team homeTeam;
 
-	@ManyToOne(fetch= FetchType.LAZY)
+	@ManyToOne(fetch= FetchType.EAGER)
 	@JoinColumn(name="away_team_id")
 	Team awayTeam;
 
