@@ -4,6 +4,7 @@ import org.carlson.hockeystats.api.utils.QuickResponse;
 import org.carlson.hockeystats.domain.Player;
 import org.carlson.hockeystats.domain.Team;
 
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.ws.rs.Consumes;
@@ -22,6 +23,7 @@ import java.util.UUID;
 /**
  * Created by ryancarlson on 5/4/15.
  */
+@Stateless
 @Path("/teams")
 public class TeamResource
 {
@@ -109,7 +111,7 @@ public class TeamResource
 		if(player.getId() == null) player.setId(UUID.randomUUID());
 		player.setTeam(team);
 
-		team.getPlayers().add(player);
+		entityManager.persist(player);
 
 		return QuickResponse.created(String.format("/teams/%s/players/%s", teamId, player.getId()));
 	}

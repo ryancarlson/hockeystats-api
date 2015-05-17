@@ -207,7 +207,6 @@ public class TeamResourceTest
 		ryanCarlson.setName("Ryan Carlson");
 		ryanCarlson.setNumber("14");
 		ryanCarlson.setPosition("D");
-		ryanCarlson.setTeam(dekesOfHazard);
 
 		Mockito.when(teamResource.entityManager.find(Team.class, teamId))
 				.thenReturn(dekesOfHazard);
@@ -216,7 +215,7 @@ public class TeamResourceTest
 
 		Assert.assertEquals(response.getStatus(), 201);
 		Assert.assertEquals(response.getHeaderString("Location"), String.format("/teams/%s/players/%s", teamId, ryanCarlson.getId()));
-		Assert.assertEquals(dekesOfHazard.getPlayers().size(), 1);
+		Assert.assertEquals(ryanCarlson.getTeam(), dekesOfHazard);
 	}
 	@Test
 	public void testAddPlayerToTeamNotFound()
