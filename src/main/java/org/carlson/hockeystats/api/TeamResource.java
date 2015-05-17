@@ -1,5 +1,6 @@
 package org.carlson.hockeystats.api;
 
+import org.carlson.hockeystats.api.utils.QuickResponse;
 import org.carlson.hockeystats.domain.Team;
 
 import javax.persistence.EntityManager;
@@ -35,15 +36,11 @@ public class TeamResource
 
 		if(team == null)
 		{
-			return Response
-					.status(Response.Status.NOT_FOUND)
-					.build();
+			return QuickResponse.notFound();
 		}
 		else
 		{
-			return Response
-					.ok(team)
-					.build();
+			return QuickResponse.ok(team);
 		}
 	}
 
@@ -56,10 +53,10 @@ public class TeamResource
 
 		entityManager.persist(team);
 
-		return Response
-				.created(URI.create(String.format("/teams/%s", team.getId())))
-				.build();
+		return QuickResponse.created(String.format("/teams/%s", team.getId()));
 	}
+
+
 
 	@PUT
 	@Path("/{teamId}")
@@ -68,24 +65,18 @@ public class TeamResource
 	{
 		if(!Objects.equals(teamId, team.getId()))
 		{
-			return Response
-					.status(Response.Status.BAD_REQUEST)
-					.entity(String.format("Team ID %s in path did not match team ID in entity %s", teamId, team.getId()))
-					.build();
+			return QuickResponse
+					.badRequest(String.format("Team ID %s in path did not match team ID in entity %s", teamId, team.getId()));
 		}
 
 		if(entityManager.getReference(Team.class, teamId) == null)
 		{
-			return Response
-					.status(Response.Status.NOT_FOUND)
-					.build();
+			return QuickResponse.notFound();
 		}
 
 		entityManager.merge(team);
 
-		return Response
-				.noContent()
-				.build();
+		return QuickResponse.noContent();
 	}
 
 	@GET
@@ -97,13 +88,9 @@ public class TeamResource
 
 		if(team == null)
 		{
-			return Response
-					.status(Response.Status.NOT_FOUND)
-					.build();
+			return QuickResponse.notFound();
 		}
 
-		return Response
-				.ok(team.getPlayers())
-				.build();
+		return QuickResponse.ok(team.getPlayers());
 	}
 }
