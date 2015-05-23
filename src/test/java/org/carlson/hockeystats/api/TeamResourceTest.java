@@ -217,6 +217,7 @@ public class TeamResourceTest
 		Assert.assertEquals(response.getHeaderString("Location"), String.format("/teams/%s/players/%s", teamId, ryanCarlson.getId()));
 		Assert.assertEquals(ryanCarlson.getTeam(), dekesOfHazard);
 	}
+
 	@Test
 	public void testAddPlayerToTeamNotFound()
 	{
@@ -240,4 +241,64 @@ public class TeamResourceTest
 		Assert.assertEquals(response.getEntity(), String.format("Team with ID %s does not exist", teamId));
 	}
 
+	@Test
+	public void testUpdatePlayer()
+	{
+		UUID teamId = UUID.randomUUID();
+		UUID playerId = UUID.randomUUID();
+
+		Player ryanCarlson = new Player();
+		ryanCarlson.setId(playerId);
+		ryanCarlson.setName("Ryan Carlson");
+		ryanCarlson.setNumber("14");
+		ryanCarlson.setPosition("D");
+
+		Mockito.when(teamResource.entityManager.getReference(Player.class, playerId))
+				.thenReturn(ryanCarlson);
+
+		Response response = teamResource.updatePlayerInformation(teamId,
+				playerId,
+				ryanCarlson);
+
+		Assert.assertEquals(response.getStatus(), 204);
+		Assert.assertNull(response.getEntity());
+	}
+
+	@Test
+	public void testUpdatePlayerNotFound()
+	{
+		UUID teamId = UUID.randomUUID();
+		UUID playerId = UUID.randomUUID();
+
+		Player ryanCarlson = new Player();
+		ryanCarlson.setId(playerId);
+		ryanCarlson.setName("Ryan Carlson");
+		ryanCarlson.setNumber("14");
+		ryanCarlson.setPosition("D");
+
+		Response response = teamResource.updatePlayerInformation(teamId,
+				playerId,
+				ryanCarlson);
+
+		Assert.assertEquals(response.getStatus(), 404);
+	}
+
+	@Test
+	public void testUpdatePlayerMismatchedIds()
+	{
+		UUID teamId = UUID.randomUUID();
+		UUID playerId = UUID.randomUUID();
+
+		Player ryanCarlson = new Player();
+		ryanCarlson.setId(playerId);
+		ryanCarlson.setName("Ryan Carlson");
+		ryanCarlson.setNumber("14");
+		ryanCarlson.setPosition("D");
+
+		Response response = teamResource.updatePlayerInformation(teamId,
+				UUID.randomUUID(),
+				ryanCarlson);
+
+		Assert.assertEquals(response.getStatus(), 400);
+	}
 }
