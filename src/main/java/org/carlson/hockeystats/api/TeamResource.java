@@ -115,4 +115,26 @@ public class TeamResource
 
 		return QuickResponse.created(String.format("/teams/%s/players/%s", teamId, player.getId()));
 	}
+
+	@PUT
+	@Path("/{teamId}/players/{playerId}")
+	public Response updatePlayerInformation(@PathParam("teamId") UUID teamId,
+											@PathParam("playerId") UUID playerId,
+											Player updatedPlayer)
+	{
+		if(!Objects.equals(playerId, updatedPlayer.getId()))
+		{
+			return QuickResponse
+					.badRequest(String.format("Player ID %s in path did not match player ID in entity %s", playerId, updatedPlayer.getId()));
+		}
+
+		if(entityManager.getReference(Player.class, playerId) == null)
+		{
+			return QuickResponse.notFound();
+		}
+
+		entityManager.merge(updatedPlayer);
+
+		return QuickResponse.noContent();
+	}
 }
