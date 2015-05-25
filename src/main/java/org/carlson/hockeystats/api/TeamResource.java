@@ -17,6 +17,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.net.URI;
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -29,6 +30,16 @@ public class TeamResource
 {
 	@PersistenceContext(name = "hockeystatsDS")
 	EntityManager entityManager;
+
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getTeams()
+	{
+		List<Team> allTeams = entityManager.createNamedQuery("Teams.selectAll", Team.class)
+				.getResultList();
+
+		return QuickResponse.ok(allTeams);
+	}
 
 	@GET
 	@Path("/{id}")
