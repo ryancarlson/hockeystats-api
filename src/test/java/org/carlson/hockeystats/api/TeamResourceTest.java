@@ -1,14 +1,18 @@
 package org.carlson.hockeystats.api;
 
+import com.google.common.collect.Lists;
 import org.carlson.hockeystats.domain.Player;
 import org.carlson.hockeystats.domain.Team;
 import org.mockito.Mockito;
+import org.mockito.stubbing.OngoingStubbing;
 import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 import javax.ws.rs.core.Response;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -63,6 +67,21 @@ public class TeamResourceTest
 
 		Assert.assertEquals(response.getStatus(), 404);
 		Assert.assertNull(response.getEntity());
+	}
+	
+	@Test public void testGetAllTeams()
+	{
+		Team dekesOfHazard = new Team();
+		dekesOfHazard.setId(UUID.randomUUID());
+		dekesOfHazard.setName("Dekes of Hazard");
+		dekesOfHazard.setLeague("B");
+
+		Team puckaneers = new Team();
+		puckaneers.setId(UUID.randomUUID());
+		puckaneers.setName("Puckaneers");
+		puckaneers.setLeague("B");
+
+		//TODO: Figure out how to mock a named query
 	}
 
 	@Test
