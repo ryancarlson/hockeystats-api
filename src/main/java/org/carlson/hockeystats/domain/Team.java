@@ -19,7 +19,7 @@ import java.util.UUID;
 public class Team
 {
 	@Id @Type(type="pg-uuid")
-	UUID id;
+	UUID id = UUID.randomUUID();
 
 	String name;
 

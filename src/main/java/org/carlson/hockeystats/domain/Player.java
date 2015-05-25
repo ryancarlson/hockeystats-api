@@ -1,11 +1,8 @@
 package org.carlson.hockeystats.domain;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.google.common.collect.Sets;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
-import java.util.Set;
 import java.util.UUID;
 
 /**
@@ -18,7 +15,7 @@ public class Player
 
 	@Id
 	@Type(type="pg-uuid")
-	UUID id;
+	UUID id = UUID.randomUUID();
 
 	String name;
 

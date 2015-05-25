@@ -62,13 +62,6 @@ public class TeamResource
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response createTeam(Team team)
 	{
-		// make sure the team has an ID in case the client did not set it
-		if(team.getId() == null) team.setId(UUID.randomUUID());
-
-        for(Player player : team.getPlayers())
-        {
-            if(player.getId() == null) player.setId(UUID.randomUUID());
-        }
 		entityManager.persist(team);
 
 		return QuickResponse.created(String.format("/teams/%s", team.getId()));
@@ -122,8 +115,6 @@ public class TeamResource
 			return QuickResponse
 					.badRequest(String.format("Team with ID %s does not exist", teamId));
 		}
-
-		if(player.getId() == null) player.setId(UUID.randomUUID());
 
 		team.getPlayers().add(player);
 

@@ -98,7 +98,6 @@ public class TeamResourceTest
 	public void testCreateTeamWithoutId()
 	{
 		Team dekesOfHazard = new Team();
-		dekesOfHazard.setId(null);
 		dekesOfHazard.setName("Dekes of Hazard");
 		dekesOfHazard.setLeague("B");
 
