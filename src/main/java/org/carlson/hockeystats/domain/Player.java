@@ -1,14 +1,11 @@
 package org.carlson.hockeystats.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.google.common.collect.Sets;
 import org.hibernate.annotations.Type;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.Set;
 import java.util.UUID;
 
 /**
@@ -28,11 +25,6 @@ public class Player
 	String number;
 
 	String position;
-
-	@ManyToOne(fetch= FetchType.LAZY)
-	@JoinColumn(name="team_id")
-	@JsonBackReference
-	Team team;
 
 	public UUID getId()
 	{
@@ -72,15 +64,5 @@ public class Player
 	public void setPosition(String position)
 	{
 		this.position = position;
-	}
-
-	public Team getTeam()
-	{
-		return team;
-	}
-
-	public void setTeam(Team team)
-	{
-		this.team = team;
 	}
 }

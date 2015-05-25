@@ -65,6 +65,10 @@ public class TeamResource
 		// make sure the team has an ID in case the client did not set it
 		if(team.getId() == null) team.setId(UUID.randomUUID());
 
+        for(Player player : team.getPlayers())
+        {
+            if(player.getId() == null) player.setId(UUID.randomUUID());
+        }
 		entityManager.persist(team);
 
 		return QuickResponse.created(String.format("/teams/%s", team.getId()));
@@ -120,9 +124,8 @@ public class TeamResource
 		}
 
 		if(player.getId() == null) player.setId(UUID.randomUUID());
-		player.setTeam(team);
 
-		entityManager.persist(player);
+		team.getPlayers().add(player);
 
 		return QuickResponse.created(String.format("/teams/%s/players/%s", teamId, player.getId()));
 	}

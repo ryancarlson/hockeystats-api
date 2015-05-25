@@ -1,18 +1,14 @@
 package org.carlson.hockeystats.api;
 
-import com.google.common.collect.Lists;
 import org.carlson.hockeystats.domain.Player;
 import org.carlson.hockeystats.domain.Team;
 import org.mockito.Mockito;
-import org.mockito.stubbing.OngoingStubbing;
 import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
 import javax.ws.rs.core.Response;
-import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -182,7 +178,6 @@ public class TeamResourceTest
 		ryanCarlson.setName("Ryan Carlson");
 		ryanCarlson.setNumber("14");
 		ryanCarlson.setPosition("D");
-		ryanCarlson.setTeam(dekesOfHazard);
 
 		dekesOfHazard.getPlayers().add(ryanCarlson);
 
@@ -234,7 +229,6 @@ public class TeamResourceTest
 
 		Assert.assertEquals(response.getStatus(), 201);
 		Assert.assertEquals(response.getHeaderString("Location"), String.format("/teams/%s/players/%s", teamId, ryanCarlson.getId()));
-		Assert.assertEquals(ryanCarlson.getTeam(), dekesOfHazard);
 	}
 
 	@Test
@@ -252,7 +246,6 @@ public class TeamResourceTest
 		ryanCarlson.setName("Ryan Carlson");
 		ryanCarlson.setNumber("14");
 		ryanCarlson.setPosition("D");
-		ryanCarlson.setTeam(dekesOfHazard);
 
 		Response response = teamResource.addPlayerToTeam(teamId, ryanCarlson);
 

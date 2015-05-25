@@ -25,8 +25,12 @@ public class Team
 
 	String league;
 
-	@OneToMany(mappedBy="team", fetch = FetchType.LAZY)
-	@JsonManagedReference
+	@ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
+	@JoinTable(
+			name="roster_entry",
+			joinColumns = @JoinColumn(name="team_id", referencedColumnName = "id"),
+			inverseJoinColumns = @JoinColumn(name="player_id", referencedColumnName = "id")
+	)
 	Set<Player> players = Sets.newHashSet();
 
 	public UUID getId()
